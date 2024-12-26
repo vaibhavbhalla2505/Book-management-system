@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management System</title>
+    <link rel="stylesheet" href="./assets/index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book Management System</h1>
+        <form>
+            <label for="title">Book Title</label>
+            <input type="text" placeholder="Enter Book Title"/>
+
+            <label for="title">Author Name</label>
+            <input type="text" placeholder="Enter Author Name"/>
+
+            <label for="title">ISBN No.</label>
+            <input type="text" placeholder="Enter ISBN No. "/>
+
+            <label for="title">Publication Date</label>
+            <input type="date"/>
+
+            <label for="title">Book Genre</label>
+            <select name="genre" id="genre" onchange="removeDefault()">
+                <option value="">Select Genre</option>
+                <option value="fiction">Fiction</option>
+                <option value="non-fiction">Non-Fiction</option>
+                <option value="biography">Biography</option>
+                <option value="autobiography">Autobiography</option>
+                <option value="history">History</option>
+                <option value="politics">Politics</option>
+                <option value="science">Science</option>
+                <option value="cooking">Cooking</option>
+                <option value="travel">Travel</option>
+                <option value="education">Education</option>
+                <option value="health">Health</option>
+                <option value="Narrative">Narrative</option>
+                <option value="novel">Novel</option>
+            </select>
+            <button>Add Book</button>
+        </form>
+    </div>
+</body>
+</html>
