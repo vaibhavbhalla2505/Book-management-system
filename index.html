@@ -9,20 +9,20 @@
 <body>
     <div class="container">
         <h1>Book Management System</h1>
-        <form>
+        <form id="form" onsubmit="validate(event)">
             <label for="title">Book Title</label>
-            <input type="text" placeholder="Enter Book Title"/>
+            <input type="text" id="title" placeholder="Enter Book Title"/>
 
-            <label for="title">Author Name</label>
-            <input type="text" placeholder="Enter Author Name"/>
+            <label for="author">Author Name</label>
+            <input type="text" id="author" placeholder="Enter Author Name"/>
 
-            <label for="title">ISBN No.</label>
-            <input type="text" placeholder="Enter ISBN No. "/>
+            <label for="isbn">ISBN No.</label>
+            <input type="text" id="isbn" placeholder="Enter ISBN No. "/>
 
-            <label for="title">Publication Date</label>
-            <input type="date"/>
+            <label for="date">Publication Date</label>
+            <input type="date" id="date" />
 
-            <label for="title">Book Genre</label>
+            <label for="genre">Book Genre</label>
             <select name="genre" id="genre" onchange="removeDefault()">
                 <option value="">Select Genre</option>
                 <option value="fiction">Fiction</option>
@@ -40,8 +40,10 @@
                 <option value="novel">Novel</option>
                 <option value="other">Other</option>
             </select>
-            <button>Add Book</button>
+
+            <button type="submit">Add Book</button>
         </form>
+        <script src="./assets/script.js"></script>
     </div>
 </body>
 </html>
