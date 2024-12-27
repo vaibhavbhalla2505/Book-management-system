@@ -14,5 +14,10 @@ A Book Management System is a software application designed to efficiently manag
 
 6 ) Maintenance: In this phase,Keep the system operational and up-to-date.
 
+# Functionality
+1 ) Hide the option "select genre" if user selects genre
+2 ) If the user selects 'Other genre' a new field will appear where the user can write their custom genre.
+3 ) Validate the form inputs 
+
 # Technology used
 Frontend-HTML,CSS,Javascript

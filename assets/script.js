@@ -29,4 +29,27 @@ removeDefault=()=>{
     }
 }
 
+validate=(e)=>{
+    e.preventDefault();
 
+    let title=document.getElementById('title').value;
+    let author=document.getElementById('author').value;
+    let genre=document.getElementById('genre').value;
+    let isbn=document.getElementById('isbn').value;
+    let date=document.getElementById('date').value;
+    let form=document.getElementById('form');
+
+    if(!title || !author || !genre || !date){
+        alert('Please fill all the details');
+        return false;
+    }
+    if(isNaN(isbn) || isbn.length!==13){
+        alert('Please enter a valid ISBN-13 number');
+        return false;
+    }
+
+    if(genre==="other" && document.getElementById('custom-genre').value===""){
+        alert('Please enter a custom genre');
+        return false;
+    }
+}
