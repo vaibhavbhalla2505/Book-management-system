@@ -60,7 +60,6 @@ validate=(e)=>{
     form.reset();
 
     updateBook();
-    console.log(books);
     alert('Book added successfully');
 }
 
@@ -114,4 +113,21 @@ updateBook=()=>{
         editButton.addEventListener('click', () => editBook(i));
         deleteButton.addEventListener('click', () => deleteBook(i));
     });
+}
+
+//edit a book
+editBook=(i)=>{
+    book=books[i];
+    
+    document.getElementById('title').value=book.title;
+    document.getElementById('author').value=book.author;
+    document.getElementById('genre').value=book.genre;
+    document.getElementById('isbn').value=book.isbn;
+    document.getElementById('date').value=book.date;
+
+    //remove the book from array 
+    books.splice(i,1);
+
+    //add a new book with changing the details
+    updateBook();
 }
