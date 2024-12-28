@@ -131,3 +131,11 @@ editBook=(i)=>{
     //add a new book with changing the details
     updateBook();
 }
+
+//delete a book
+deleteBook=(i)=>{
+    books.splice(i,1);
+
+    updateBook();
+    alert('Book deleted successfully');
+}
