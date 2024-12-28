@@ -29,6 +29,7 @@ removeDefault=()=>{
     }
 }
 
+let books=[];      //initialize book array
 validate=(e)=>{
     e.preventDefault();
 
@@ -52,4 +53,65 @@ validate=(e)=>{
         alert('Please enter a custom genre');
         return false;
     }
+
+    books.push({title, author,isbn,genre,date});
+
+    //when user clicks on add button book form is automatically reset 
+    form.reset();
+
+    updateBook();
+    console.log(books);
+    alert('Book added successfully');
+}
+
+//adding a new book
+updateBook=()=>{
+    const bTBody = document.getElementById('bookTable').querySelector('tbody');
+    bTBody.innerHTML='';
+
+    books.forEach((book,i) => {
+        //create a new row for each book in the array
+        const row=document.createElement('tr');
+        
+        //create cells for each book property and append them to the row
+        const titleCell = document.createElement('td');
+        titleCell.textContent = book.title;
+        row.appendChild(titleCell);
+
+        const authorCell = document.createElement('td');
+        authorCell.textContent = book.author;
+        row.appendChild(authorCell);
+
+        const isbnCell = document.createElement('td');
+        isbnCell.textContent = book.isbn;
+        row.appendChild(isbnCell);
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = book.date;
+        row.appendChild(dateCell);
+
+        const genreCell = document.createElement('td');
+        genreCell.textContent = book.genre;
+        row.appendChild(genreCell);
+
+
+        const actionCell = document.createElement('td');
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        actionCell.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        actionCell.appendChild(deleteButton);
+
+        row.appendChild(actionCell);
+
+        //add row to table body
+        bTBody.appendChild(row);
+
+        //add event listeners for edit and delete buttons
+        editButton.addEventListener('click', () => editBook(i));
+        deleteButton.addEventListener('click', () => deleteBook(i));
+    });
 }
