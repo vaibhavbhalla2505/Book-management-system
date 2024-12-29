@@ -89,6 +89,10 @@ updateBook=()=>{
         dateCell.textContent = book.date;
         row.appendChild(dateCell);
 
+        const ageCell = document.createElement('td');
+        ageCell.textContent = calculateAge(book.date);
+        row.appendChild(ageCell);
+
         const genreCell = document.createElement('td');
         genreCell.textContent = book.genre;
         row.appendChild(genreCell);
@@ -138,4 +142,28 @@ deleteBook=(i)=>{
 
     updateBook();
     alert('Book deleted successfully');
+}
+
+//calculate the age of the book
+calculateAge=(date)=>{
+    let pubYear=date.substring(0,4);
+    let pubMonth=date.substring(5,7);
+    let pubDay=date.substring(8,10);
+
+    let today = new Date();
+    let currentDate = today.getDate();
+    let currentMonth = today.getMonth()+1;
+    let currentYear = today.getFullYear();
+
+    if(currentYear-pubYear > 0){
+        return currentYear-pubYear + " years ago";  
+    }
+    else if(currentMonth-pubMonth > 0){
+        return currentMonth-pubMonth + " months ago";
+    }
+    else if(currentDate-pubDay > 0){
+        return currentDate-pubDay + " days ago";
+    }
+    else
+    return "Less than a day";
 }

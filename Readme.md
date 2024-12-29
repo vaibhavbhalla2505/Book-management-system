@@ -23,5 +23,9 @@ A Book Management System is a software application designed to efficiently manag
 
 4 ) Add books and display all the details of books.
 
+5 ) Edit the details of books and delete the book.
+ 
+6 ) Calculate the age of the book
+
 # Technology used
 Frontend-HTML,CSS,Javascript
