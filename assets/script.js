@@ -43,10 +43,47 @@ validate=(e)=>{
     let date=document.getElementById('date').value;
     let form=document.getElementById('form');
 
-    if(!title || !author || !genre || !date){
-        alert('Please fill all the details');
+    let today = new Date();
+    let currentDate = today.getDate();
+    let currentMonth = today.getMonth()+1;
+    let currentYear = today.getFullYear();
+
+    let pubYear=date.substring(0,4);
+    let pubMonth=date.substring(5,7);
+    let pubDay=date.substring(8,10);
+
+
+    if(!title){
+        alert('Please fill the title of book');
         return false;
     }
+    if(!author){
+        alert('Please enter the author name');
+        return false;
+    }
+    if(!genre){
+        alert('Please select a genre');
+        return false;
+    }
+    if(!date){
+        alert('Please fill the publication date');
+        return false;
+    }
+
+    //check if the entered date is valid
+    if(currentYear < pubYear){
+        alert('Please enter the correct date');
+        return false;
+    }
+    if(currentYear==pubYear && currentMonth < pubMonth){
+        alert('Please enter the correct date');
+        return false;
+    }
+    if(currentYear==pubYear && currentMonth==pubMonth && currentDate < pubDay){
+        alert('Please enter the correct date');
+        return false;
+    }
+
     if(isNaN(isbn) || isbn.length!==13){
         alert('Please enter a valid ISBN-13 number');
         return false;
