@@ -1,3 +1,7 @@
+let books=[];      //initialize book array
+let standardGenre=["fiction", "non-fiction", "biography", "autobiography", "history"
+    ,"politics","science","cooking","travel","education","health","narrative","novel"];
+
 removeDefault=()=>{
     let genreOption=document.getElementById('genre');
     let selectedGenre=genreOption.value;
@@ -29,7 +33,6 @@ removeDefault=()=>{
     }
 }
 
-let books=[];      //initialize book array
 validate=(e)=>{
     e.preventDefault();
 
@@ -53,18 +56,26 @@ validate=(e)=>{
         alert('Please enter a custom genre');
         return false;
     }
+    if(genre==="other")
+        genre=document.getElementById('custom-genre').value;
 
     books.push({title, author,isbn,genre,date});
 
     //when user clicks on add button book form is automatically reset 
     form.reset();
 
-    updateBook();
+    // cutome genre input is hide when user clicks on add button because new user enters the details again
+    var customGenreInput = document.getElementById('custom-genre');
+    if (customGenreInput) {
+        customGenreInput.remove();
+    }
+
+    updateBook(books);
     alert('Book added successfully');
 }
 
 //adding a new book
-updateBook=()=>{
+updateBook=(books)=>{
     const bTBody = document.getElementById('bookTable').querySelector('tbody');
     bTBody.innerHTML='';
 
@@ -114,18 +125,23 @@ updateBook=()=>{
         bTBody.appendChild(row);
 
         //add event listeners for edit and delete buttons
-        editButton.addEventListener('click', () => editBook(i));
-        deleteButton.addEventListener('click', () => deleteBook(i));
+        editButton.addEventListener('click', () => editBook(books,i));
+        deleteButton.addEventListener('click', () => deleteBook(books,i));
     });
 }
 
 //edit a book
-editBook=(i)=>{
+editBook=(books,i)=>{
     book=books[i];
     
     document.getElementById('title').value=book.title;
     document.getElementById('author').value=book.author;
-    document.getElementById('genre').value=book.genre;
+
+    if(!standardGenre.includes(book.genre))
+        document.getElementById('genre').value="other";
+    else
+        document.getElementById('genre').value=book.genre;
+
     document.getElementById('isbn').value=book.isbn;
     document.getElementById('date').value=book.date;
 
@@ -133,14 +149,14 @@ editBook=(i)=>{
     books.splice(i,1);
 
     //add a new book with changing the details
-    updateBook();
+    updateBook(books);
 }
 
 //delete a book
-deleteBook=(i)=>{
+deleteBook=(books,i)=>{
     books.splice(i,1);
 
-    updateBook();
+    updateBook(books);
     alert('Book deleted successfully');
 }
 
@@ -166,4 +182,16 @@ calculateAge=(date)=>{
     }
     else
     return "Less than a day";
+}
+
+//display the books based on the genre filter
+filterGenre=()=>{
+    let choosenGenre=document.getElementById("genreFilter").value;
+    let selectedGenre;
+    if(choosenGenre=="other")
+        selectedGenre=books.filter(book=>!standardGenre.includes(book.genre));
+    else
+        selectedGenre=choosenGenre ? books.filter(book=>book.genre===choosenGenre) : books;
+    
+    updateBook(selectedGenre);
 }
