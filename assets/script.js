@@ -1,6 +1,6 @@
 let books=[];      //initialize book array
 let standardGenre=["fiction", "non-fiction", "biography", "autobiography", "history"
-    ,"politics","science","cooking","travel","education","health","narrative","novel"];
+    ,"politics","science","narrative","novel"];
 
 removeDefault=()=>{
     let genreOption=document.getElementById('genre');
