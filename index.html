@@ -39,36 +39,42 @@
 
             <button type="submit">Add Book</button>
         </form>
-        <h2>Books List</h2>
-        <table id="bookTable">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>ISBN</th>
-                    <th>Publication Date</th>
-                    <th>Book Age</th>
-                    <th>
-                        <select name="genre" id="genreFilter" onchange="filterGenre()">
-                            <option value="">Select Genre</option>
-                            <option value="fiction">Fiction</option>
-                            <option value="non-fiction">Non-Fiction</option>
-                            <option value="biography">Biography</option>
-                            <option value="autobiography">Autobiography</option>
-                            <option value="history">History</option>
-                            <option value="politics">Politics</option>
-                            <option value="science">Science</option>
-                            <option value="Narrative">Narrative</option>
-                            <option value="novel">Novel</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+
+        <div class="tableData">
+            <h2>Books List</h2>
+            <input type="text" id="search" placeholder="search by title" />
+            <button id="searchButton" onclick="searchBook()">Search</button>
+            <table id="bookTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th>Publication Date</th>
+                        <th>Book Age</th>
+                        <th>
+                            <select name="genre" id="genreFilter" onchange="filterGenre()">
+                                <option value="">Select Genre</option>
+                                <option value="fiction">Fiction</option>
+                                <option value="non-fiction">Non-Fiction</option>
+                                <option value="biography">Biography</option>
+                                <option value="autobiography">Autobiography</option>
+                                <option value="history">History</option>
+                                <option value="politics">Politics</option>
+                                <option value="science">Science</option>
+                                <option value="Narrative">Narrative</option>
+                                <option value="novel">Novel</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
         <script src="./assets/script.js"></script>
+        <script src="./assets//fetchBook.js"></script>
     </div>
 </body>
 </html>
