@@ -119,40 +119,49 @@ updateBook=(books)=>{
     books.forEach((book,i) => {
         //create a new row for each book in the array
         const row=document.createElement('tr');
-        
+
         //create cells for each book property and append them to the row
         const titleCell = document.createElement('td');
+        titleCell.setAttribute('class','border border-black');
         titleCell.textContent = book.title;
         row.appendChild(titleCell);
 
         const authorCell = document.createElement('td');
+        authorCell.setAttribute('class','border border-black');
         authorCell.textContent = book.author;
         row.appendChild(authorCell);
 
         const isbnCell = document.createElement('td');
+        isbnCell.setAttribute('class','border border-black');
         isbnCell.textContent = book.isbn;
         row.appendChild(isbnCell);
 
         const dateCell = document.createElement('td');
+        dateCell.setAttribute('class','border border-black');
         dateCell.textContent = book.date;
         row.appendChild(dateCell);
 
         const ageCell = document.createElement('td');
+        ageCell.setAttribute('class','border border-black');
         ageCell.textContent = calculateAge(book.date);
         row.appendChild(ageCell);
 
         const genreCell = document.createElement('td');
+        genreCell.setAttribute('class','border border-black');
         genreCell.textContent = book.genre;
         row.appendChild(genreCell);
 
 
         const actionCell = document.createElement('td');
+        actionCell.setAttribute('class','border border-black');
 
         const editButton = document.createElement('button');
+        editButton.setAttribute('class','border p-1 text-white bg-green-700 hover:bg-green-300 hover:text-black');
         editButton.textContent = 'Edit';
         actionCell.appendChild(editButton);
 
         const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('class','border p-1 text-white bg-red-700 hover:bg-red-300 hover:text-black');
         deleteButton.textContent = 'Delete';
         actionCell.appendChild(deleteButton);
 
@@ -231,4 +240,18 @@ filterGenre=()=>{
         selectedGenre=choosenGenre ? books.filter(book=>book.genre===choosenGenre) : books;
     
     updateBook(selectedGenre);
+}
+
+sortByTitle=()=>{
+    const sortBy=document.getElementById('sort').value;
+    if(sortBy=='asc'){
+        const filterData=books.sort((a,b)=>a.title.localeCompare(b.title));
+        updateBook(filterData);
+    }
+    else if(sortBy=='desc'){
+        const filterData=books.sort((a,b)=>b.title.localeCompare(a.title));
+        updateBook(filterData);
+    }
+    else
+    updateBook(books);
 }

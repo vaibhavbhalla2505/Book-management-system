@@ -14,9 +14,9 @@ const url="https://www.googleapis.com/books/v1/volumes?q=";
     })
     .catch(err=>console.error(err));
 })();
-transformData=(apiData)=>{
-    console.log("Books from fetch",apiData);
 
+//validate the data is fetching correctly and map the fetching data to our fields
+transformData=(apiData)=>{
     return apiData.filter(
         (data)=>
         data.volumeInfo.title && 
@@ -35,6 +35,8 @@ transformData=(apiData)=>{
         })
     )
 }
+
+//search the book based on title
 searchBook=async()=>{
     const searchValue=document.getElementById('search').value.toLowerCase();
     
