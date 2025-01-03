@@ -31,5 +31,9 @@ A Book Management System is a software application designed to efficiently manag
 
 8 ) Fetching data from an external API and imlementing asynchronously book searching
 
+9 ) Styling the form using tailwind CSS and make responsive design for mobile,tablet and desktop devices.
+
+10 ) Coverting functions into ES6 classes i.e., making it easier to create and manage objects with methods and properties
+
 # Technology used
 Frontend-HTML,CSS,Javascript
