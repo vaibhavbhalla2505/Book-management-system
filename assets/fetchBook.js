@@ -1,76 +1,83 @@
-const url="https://www.googleapis.com/books/v1/volumes?q=";
-
-//immediately invoked function expression 
-(async()=>{
-    fetch(`${url}genre=fiction+biography+history+novel`)
-    .then(res=>res.json())
-    .then(data=>{
-        const correctData=transformData(data.items);
-        if(correctData){
-            bookmanager.books=correctData;            
-            localStorage.setItem('data',JSON.stringify(correctData));
-            bookmanager.updateBook(bookmanager.books);
-        }
-    })
-    .catch(err=>console.error(err));
-})();
-
-//validate the data is fetching correctly and map the fetching data to our fields
-transformData=(apiData)=>{
-    return apiData.filter(
-        (data)=>
-        data.volumeInfo.title && 
-        data.volumeInfo.authors && 
-        data.volumeInfo.categories && 
-        data.volumeInfo.industryIdentifiers && 
-        data.volumeInfo.industryIdentifiers[0].identifier.length==13 && 
-        data.volumeInfo.publishedDate
-        
-    ).map(
-        (data)=>({
-            title:data.volumeInfo.title,
-            author:data.volumeInfo.authors[0],
-            genre:data.volumeInfo.categories[0].toLowerCase(),
-            isbn:data.volumeInfo.industryIdentifiers[0].identifier ,
-            date:data.volumeInfo.publishedDate
-        })
-    )
-}
-
-//search the book based on title
-searchBook=async()=>{
-    const searchValue=document.getElementById('search').value.toLowerCase();
-    //if search input is empty show all the books
-    if(searchValue===''){
-       bookmanager.updateBook(bookmanager.books);
+class APIBookManager extends BookManager {
+    constructor() {
+        super();
+        this.url = "https://www.googleapis.com/books/v1/volumes?q=";
     }
-    else{
+
+    async fetchBooks() {
         try {
-            const res=await fetch(`${url}title:${searchValue}`)
-            const data=await res.json();
-            if(res.ok){
-                //filter the date that includes particular title
-                const filterData=data.items.filter(d=>{
-                    return d.volumeInfo.title.toLowerCase().includes(searchValue);
-                })
-                const correctData=transformData(filterData);
+            const res = await fetch(`${this.url}genre=fiction+biography+history+novel+science`);
+            const data = await res.json();
+            const correctData = this.transformData(data.items);
+            if (correctData) {
+                this.books = correctData;
+                this.updateBook(this.books);
+            }
+        } catch (err) {
+            console.error('Error fetching books:', err);
+        }
+    }
 
-                //if there is no book on particular title, show all the books
-                if(correctData.length<=0){
+    // Transform API data to match our internal data format
+    transformData(apiData) {
+        return apiData
+            .filter(data =>
+                data.volumeInfo.title &&
+                data.volumeInfo.authors &&
+                data.volumeInfo.categories &&
+                data.volumeInfo.industryIdentifiers &&
+                data.volumeInfo.industryIdentifiers[0].identifier.length === 13 &&
+                data.volumeInfo.publishedDate
+            )
+            .map(data => ({
+                title: data.volumeInfo.title,
+                author: data.volumeInfo.authors[0],
+                genre: data.volumeInfo.categories[0].toLowerCase(),
+                isbn: data.volumeInfo.industryIdentifiers[0].identifier,
+                date: data.volumeInfo.publishedDate
+            }));
+    }
+
+    // Search books by title
+    async searchBook() {
+        const searchValue = document.getElementById('search').value.toLowerCase();
+
+        //show all books when no search value
+        if (searchValue === '') {
+            this.updateBook(this.books); 
+        } else {
+            try {
+                const res = await fetch(`${this.url}title:${searchValue}`);
+                const data = await res.json();
+                if (res.ok) {
+                    const filterData = data.items.filter(d => d.volumeInfo.title.toLowerCase().includes(searchValue));
+                    const correctData = this.transformData(filterData);
+
+                    if (correctData.length <= 0) {
+                        alert('No Book found');
+                        this.updateBook(this.books);  
+                    } else {
+                        this.updateBook(correctData); 
+                    }
+                } else {
                     alert('No Book found');
-                    bookmanager.updateBook(bookmanager.books);
+                    this.updateBook(this.books);
                 }
-                //else show tha filtered book
-                else{
-                    bookmanager.updateBook(correctData);
-                }
+            } catch (error) {
+                console.log('Error searching for books:', error);
             }
-            else{
-                alert('No Book found');
-                bookmanager.updateBook(bookmanager.books);
-            }
-        } catch (error) {
-            console.log('Error',error);
         }
     }
 }
+
+// Creating an instance of the APIBookManager class
+const apiBookManager = new APIBookManager();
+
+document.getElementById('genre').addEventListener('change', () => apiBookManager.removeDefault());
+document.getElementById('form').addEventListener('submit', (e) => apiBookManager.validate(e));
+document.getElementById('genreFilter').addEventListener('change', () => apiBookManager.filterGenre());
+document.getElementById('sort').addEventListener('change', () => apiBookManager.sortByTitle());
+document.getElementById('searchButton').addEventListener('click', () => apiBookManager.searchBook());
+
+// Fetch books when the page loads
+window.addEventListener('load', () => apiBookManager.fetchBooks());

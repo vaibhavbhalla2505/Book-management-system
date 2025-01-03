@@ -35,5 +35,7 @@ A Book Management System is a software application designed to efficiently manag
 
 10 ) Coverting functions into ES6 classes i.e., making it easier to create and manage objects with methods and properties
 
+11 ) Implementing the inheritance i.e., Parent class responsible for managing books locally, while the child class that extends parent class to add functionality for fetching book data from an external API.
+
 # Technology used
 Frontend-HTML,CSS,Javascript

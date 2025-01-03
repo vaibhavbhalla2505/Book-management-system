@@ -228,11 +228,9 @@ class BookManager{
         else if(currentMonth-pubMonth > 0){
             return currentMonth-pubMonth + " months ago";
         }
-        else if(currentDate-pubDay > 0){
+        else{
             return currentDate-pubDay + " days ago";
         }
-        else
-        return "Less than a day";
     }
 
     //display the books based on the genre filter
@@ -265,7 +263,3 @@ class BookManager{
 
 //creating an instance of the BookManager class
 const bookmanager=new BookManager();
-document.getElementById('genre').addEventListener('change',()=>bookmanager.removeDefault());
-document.getElementById('form').addEventListener('submit',(e)=>bookmanager.validate(e));
-document.getElementById('genreFilter').addEventListener('change',()=>bookmanager.filterGenre());
-document.getElementById('sort').addEventListener('change',()=>bookmanager.sortByTitle());
