@@ -6,7 +6,7 @@ class APIBookManager extends BookManager {
 
     async fetchBooks() {
         try {
-            const res = await fetch(`${this.url}genre=fiction+biography+history+novel+science`);
+            const res = await fetch(`${this.url}genre=fiction+biography+history+novel`);
             const data = await res.json();
             const correctData = this.transformData(data.items);
             if (correctData) {
@@ -26,6 +26,8 @@ class APIBookManager extends BookManager {
                 data.volumeInfo.authors &&
                 data.volumeInfo.categories &&
                 data.volumeInfo.industryIdentifiers &&
+                data.saleInfo.listPrice?.amount &&
+                data.saleInfo?.retailPrice?.amount &&
                 data.volumeInfo.industryIdentifiers[0].identifier.length === 13 &&
                 data.volumeInfo.publishedDate
             )
@@ -34,7 +36,9 @@ class APIBookManager extends BookManager {
                 author: data.volumeInfo.authors[0],
                 genre: data.volumeInfo.categories[0].toLowerCase(),
                 isbn: data.volumeInfo.industryIdentifiers[0].identifier,
-                date: data.volumeInfo.publishedDate
+                date: data.volumeInfo.publishedDate,
+                price:data.saleInfo.listPrice.amount,
+                discountPrice:data.saleInfo.retailPrice.amount,
             }));
     }
 

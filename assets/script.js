@@ -151,11 +151,15 @@ class BookManager{
             ageCell.textContent = this.calculateAge(book.date);
             row.appendChild(ageCell);
     
+            const price=document.createElement('td');
+            price.setAttribute('class','border border-black font-medium');
+            price.innerHTML =this.discountCalculation(book.price,book.discountPrice);
+            row.appendChild(price);
+
             const genreCell = document.createElement('td');
             genreCell.setAttribute('class','border border-black');
             genreCell.textContent = book.genre;
             row.appendChild(genreCell);
-    
     
             const actionCell = document.createElement('td');
             actionCell.setAttribute('class','border border-black');
@@ -258,6 +262,24 @@ class BookManager{
         }
         else
         this.updateBook(this.books);
+    }
+
+    discountCalculation=(actualP,discountP)=>{
+        if(actualP==undefined && discountP==undefined){
+            actualP=0;
+            discountP=0;
+        }
+        const percentage=(discountP/actualP)*100;
+        const discountPercentage=100-percentage;
+        
+        if(actualP!=discountP){
+            return  `<span class="line-through text-blue-600 font-semibold">${actualP.toFixed()} rs/- </span>
+                     <span class="font-medium text-red-600">(${discountPercentage.toFixed()}% off)</span>
+                     <span class=" font-bold text-green-600">${discountP.toFixed()} rs/-</span>`;
+        }
+        else{
+            return `<span class="text-green-600 font-bold">${actualP.toFixed()} rs/- </span>`;
+        }
     }
 }
 
