@@ -1,31 +1,78 @@
-.container{
-    max-width: 500px;
-    margin: 40px auto;
-    border-radius: 20px;
-    padding: 15px;
+body {
+    margin: 0;
+    padding: 0;
 }
-label{
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-input,select,button{
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
     padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
 }
-form{
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
 }
-button{
-    padding: 10px 20px;
+
+form label {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input, form select, form button {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: cyan;
+    font-weight: bold;
     cursor: pointer;
 }
-table{
+.tableData {
+    margin-top: 30px;
     width: 100%;
-    border: 1px solid black;
 }
-th, td{
-    border: 1px solid black;
+
+.tableData input, .tableData button{
+    padding: 8px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+#search{
+    width: 80%;
+}
+#searchButton{
+    background-color: cyan;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
     padding: 10px;
+    text-align: left;
+}
+
+table th {
+    font-weight: bold;
+    text-align: center;
 }
