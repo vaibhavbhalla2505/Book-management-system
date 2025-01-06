@@ -43,32 +43,19 @@ searchBook=async()=>{
         updateBook(books);
     }
     else{
-        try {
-            const res=await fetch(`${url}title:${searchValue}`)
-            const data=await res.json();
-            if(res.ok){
-                //filter the date that includes particular title
-                const filterData=data.items.filter(d=>{
-                    return d.volumeInfo.title.toLowerCase().includes(searchValue);
-                })
-                const correctData=transformData(filterData);
-
-                //if there is no book on particular title, show all the books
-                if(correctData.length<=0){
-                    alert('No Book found');
-                    updateBook(books);
-                }
-                //else show tha filtered book
-                else{
-                    updateBook(correctData);
-                }
-            }
-            else{
+        if (searchValue === '') {
+            this.updateBook(this.books); 
+        } 
+        else {
+            const filterData = this.books.filter(book => book.title.toLowerCase().includes(searchValue));
+            
+            if (filterData.length <= 0) {
                 alert('No Book found');
-                updateBook(books);
+                this.updateBook(this.books);  
+            } 
+            else {
+                this.updateBook(filterData); 
             }
-        } catch (error) {
-            console.log('Error',error);
         }
     }
 }
