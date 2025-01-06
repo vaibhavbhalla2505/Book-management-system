@@ -37,5 +37,7 @@ A Book Management System is a software application designed to efficiently manag
 
 11 ) Implementing the inheritance i.e., Parent class responsible for managing books locally, while the child class that extends parent class to add functionality for fetching book data from an external API.
 
+12 ) Added methods to calculate price and discount price calculation.
+
 # Technology used
 Frontend-HTML,CSS,Javascript

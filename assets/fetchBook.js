@@ -1,12 +1,12 @@
 class APIBookManager extends BookManager {
     constructor() {
         super();
-        this.url = "https://www.googleapis.com/books/v1/volumes?q=";
+        this.url = "https://www.googleapis.com/books/v1/volumes?q=genre=fiction+biography+history+novel";
     }
 
     async fetchBooks() {
         try {
-            const res = await fetch(`${this.url}genre=fiction+biography+history+novel`);
+            const res = await fetch(this.url);
             const data = await res.json();
             const correctData = this.transformData(data.items);
             if (correctData) {
@@ -51,7 +51,7 @@ class APIBookManager extends BookManager {
             this.updateBook(this.books); 
         } else {
             try {
-                const res = await fetch(`${this.url}title:${searchValue}`);
+                const res = await fetch(this.url);
                 const data = await res.json();
                 if (res.ok) {
                     const filterData = data.items.filter(d => d.volumeInfo.title.toLowerCase().includes(searchValue));
