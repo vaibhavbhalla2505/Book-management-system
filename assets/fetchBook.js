@@ -1,7 +1,7 @@
 class APIBookManager extends BookManager {
     constructor() {
         super();
-        this.url = "https://www.googleapis.com/books/v1/volumes?q=genre=fiction+biography+history+novel";
+        this.url = "https://www.googleapis.com/books/v1/volumes?q=genre:fiction+biography+history+novel";
     }
 
     async fetchBooks() {
@@ -43,36 +43,23 @@ class APIBookManager extends BookManager {
     }
 
     // Search books by title
-    async searchBook() {
+async searchBook() {
         const searchValue = document.getElementById('search').value.toLowerCase();
-
-        //show all books when no search value
+    
+        // Show all books when no search value
         if (searchValue === '') {
             this.updateBook(this.books); 
         } else {
-            try {
-                const res = await fetch(this.url);
-                const data = await res.json();
-                if (res.ok) {
-                    const filterData = data.items.filter(d => d.volumeInfo.title.toLowerCase().includes(searchValue));
-                    const correctData = this.transformData(filterData);
-
-                    if (correctData.length <= 0) {
-                        alert('No Book found');
-                        this.updateBook(this.books);  
-                    } else {
-                        this.updateBook(correctData); 
-                    }
-                } else {
-                    alert('No Book found');
-                    this.updateBook(this.books);
-                }
-            } catch (error) {
-                console.log('Error searching for books:', error);
+            const filterData = this.books.filter(book => book.title.toLowerCase().includes(searchValue));
+            
+            if (filterData.length <= 0) {
+                alert('No Book found');
+                this.updateBook(this.books);  
+            } else {
+                this.updateBook(filterData); 
             }
         }
     }
-}
 
 // Creating an instance of the APIBookManager class
 const apiBookManager = new APIBookManager();
