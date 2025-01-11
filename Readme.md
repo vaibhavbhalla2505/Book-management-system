@@ -40,4 +40,4 @@ A Book Management System is a software application designed to efficiently manag
 12 ) Added methods to calculate price and discount price calculation.
 
 # Technology used
-Frontend-HTML,CSS,Javascript
+Frontend-HTML,TailwindCSS,Typescript

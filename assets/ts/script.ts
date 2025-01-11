@@ -8,8 +8,8 @@ interface Book {
     discountPrice?: number;
 }
 
-class BookManager {
-    books: Book[] = [];  // Initialize book array
+class BookManager<T extends Book> {
+    books: T[] = [];  // Initialize book array
     standardGenre: string[] = ["fiction", "non-fiction", "biography", "autobiography", "history",
         "politics", "science", "narrative", "novel"];
 
@@ -110,7 +110,7 @@ class BookManager {
             genre = (document.getElementById('custom-genre') as HTMLInputElement).value;
         }
 
-        this.books.push({ title, author, isbn, genre, date });
+        this.books.push({ title, author, isbn, genre, date } as T);
 
         // When the user clicks on add button, the book form is automatically reset 
         form.reset();
@@ -127,7 +127,7 @@ class BookManager {
     }
 
     // Adding a new book
-    updateBook = (books: Book[]): void => {
+    updateBook = (books: T[]): void => {
         const bTBody = document.getElementById('bookTable')!.querySelector('tbody')!;
         bTBody.innerHTML = '';
 
@@ -192,11 +192,12 @@ class BookManager {
             // Add event listeners for edit and delete buttons
             editButton.addEventListener('click', () => this.editBook(books, i));
             deleteButton.addEventListener('click', () => this.deleteBook(books, i));
-        });
+            }
+        );
     }
 
     // Edit a book
-    editBook = (books: Book[], i: number): void => {
+    editBook = (books: T[], i: number): void => {
         const book = books[i];
 
         (document.getElementById('title') as HTMLInputElement).value = book.title;
@@ -218,7 +219,7 @@ class BookManager {
     }
 
     // Delete a book
-    deleteBook = (books: Book[], i: number): void => {
+    deleteBook = (books: T[], i: number): void => {
         books.splice(i, 1);
 
         this.updateBook(books);
@@ -245,8 +246,8 @@ class BookManager {
         }
     }
 
-    //     //display the books based on the genre filter
-    filterGenre=()=>{
+    //display the books based on the genre filter
+    filterGenre=():void=>{
         let choosenGenre=(document.getElementById("genreFilter") as HTMLSelectElement).value;
         let selectedGenre;
         if(choosenGenre=="other")
@@ -258,7 +259,7 @@ class BookManager {
     }
 
     //sort the books by ascending or descending order based on title
-    sortByTitle=()=>{
+    sortByTitle=():void=>{
         const sortBy=(document.getElementById('sort') as HTMLSelectElement).value;
         if(sortBy=='asc'){
             const filterData=this.books.sort((a,b)=>a.title.localeCompare(b.title));

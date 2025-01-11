@@ -1,4 +1,13 @@
-class APIBookManager extends BookManager {
+interface Book {
+    title: string;
+    author: string;
+    isbn: string;
+    genre: string;
+    date: string;
+    price?: number;
+    discountPrice?: number;
+}
+class APIBookManager<T extends Book> extends BookManager<T> {
     private url: string;
 
     constructor() {
@@ -22,7 +31,7 @@ class APIBookManager extends BookManager {
     }
 
     // Transform API data to match our internal data format
-    transformData(apiData: any[]): Book[] {
+    transformData(apiData: any[]): T[] {
         return apiData
             .filter(data =>
                 data.volumeInfo.title &&
@@ -42,7 +51,7 @@ class APIBookManager extends BookManager {
                 date: data.volumeInfo.publishedDate,
                 price: data.saleInfo.listPrice.amount,
                 discountPrice: data.saleInfo.retailPrice.amount,
-            }));
+            }) as T);
     }
 
     // Search books by title

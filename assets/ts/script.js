@@ -196,7 +196,7 @@ class BookManager {
                 return `${currentDate - parseInt(pubDay)} days ago`;
             }
         };
-        //     //display the books based on the genre filter
+        //display the books based on the genre filter
         this.filterGenre = () => {
             let choosenGenre = document.getElementById("genreFilter").value;
             let selectedGenre;
