@@ -8,12 +8,31 @@ interface Book {
     price?: number;
     discountPrice?: number;
 }
-class APIBookManager<T extends Book> extends BookManager<T> {
+class APIBookManager<T extends Book> {
     private url: string;
+    private bookmanager: BookManager<T>;
 
     constructor() {
-        super();
+        // super();
+        this.bookmanager=new BookManager();
         this.url = "https://www.googleapis.com/books/v1/volumes?q=genre:fiction+biography+history+novel";
+    }
+
+    public removeDefault(): void {
+        this.bookmanager.removeDefault();
+    }
+
+    // to call validate from BookManager
+    public validate(e: Event): boolean {
+        return this.bookmanager.validate(e);
+    }
+
+    public filterGenre(): void {
+        this.bookmanager.filterGenre();
+    }
+
+    public sortByTitle(): void {
+        this.bookmanager.sortByTitle();
     }
 
     // Fetch books from the API
@@ -23,8 +42,8 @@ class APIBookManager<T extends Book> extends BookManager<T> {
             const data = await res.json();
             const correctData = this.transformData(data.items);
             if (correctData) {
-                this.books = correctData;
-                this.updateBook(this.books);
+                this.bookmanager.books = correctData;
+                this.bookmanager.updateBook(this.bookmanager.books);
             }
         } catch (err) {
             console.error('Error fetching books:', err);
@@ -61,15 +80,15 @@ class APIBookManager<T extends Book> extends BookManager<T> {
     
         // Show all books when no search value
         if (searchValue === '') {
-            this.updateBook(this.books); 
+            this.bookmanager.updateBook(this.bookmanager.books); 
         } else {
-            const filterData = this.books.filter(book => book.title.toLowerCase().includes(searchValue));
+            const filterData = this.bookmanager.books.filter(book => book.title.toLowerCase().includes(searchValue));
             
             if (filterData.length <= 0) {
                 alert('No Book found');
-                this.updateBook(this.books);  
+                this.bookmanager.updateBook(this.bookmanager.books);  
             } else {
-                this.updateBook(filterData); 
+                this.bookmanager.updateBook(filterData); 
             }
         }
     }
@@ -86,5 +105,3 @@ document.getElementById('searchButton')?.addEventListener('click', () => apiBook
 
 // Fetch books when the page loads
 window.addEventListener('load', () => apiBookManager.fetchBooks());
-
-

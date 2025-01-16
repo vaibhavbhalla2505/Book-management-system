@@ -9,10 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var _a, _b, _c, _d, _e;
 import { BookManager } from "./script.js";
-class APIBookManager extends BookManager {
+class APIBookManager {
     constructor() {
-        super();
+        // super();
+        this.bookmanager = new BookManager();
         this.url = "https://www.googleapis.com/books/v1/volumes?q=genre:fiction+biography+history+novel";
+    }
+    removeDefault() {
+        this.bookmanager.removeDefault();
+    }
+    // Expose a method to call validate from BookManager
+    validate(e) {
+        return this.bookmanager.validate(e);
+    }
+    // Expose a method to call filterGenre from BookManager
+    filterGenre() {
+        this.bookmanager.filterGenre();
+    }
+    // Expose a method to call sortByTitle from BookManager
+    sortByTitle() {
+        this.bookmanager.sortByTitle();
     }
     // Fetch books from the API
     fetchBooks() {
@@ -22,8 +38,8 @@ class APIBookManager extends BookManager {
                 const data = yield res.json();
                 const correctData = this.transformData(data.items);
                 if (correctData) {
-                    this.books = correctData;
-                    this.updateBook(this.books);
+                    this.bookmanager.books = correctData;
+                    this.bookmanager.updateBook(this.bookmanager.books);
                 }
             }
             catch (err) {
@@ -61,16 +77,16 @@ class APIBookManager extends BookManager {
             const searchValue = document.getElementById('search').value.toLowerCase();
             // Show all books when no search value
             if (searchValue === '') {
-                this.updateBook(this.books);
+                this.bookmanager.updateBook(this.bookmanager.books);
             }
             else {
-                const filterData = this.books.filter(book => book.title.toLowerCase().includes(searchValue));
+                const filterData = this.bookmanager.books.filter(book => book.title.toLowerCase().includes(searchValue));
                 if (filterData.length <= 0) {
                     alert('No Book found');
-                    this.updateBook(this.books);
+                    this.bookmanager.updateBook(this.bookmanager.books);
                 }
                 else {
-                    this.updateBook(filterData);
+                    this.bookmanager.updateBook(filterData);
                 }
             }
         });
