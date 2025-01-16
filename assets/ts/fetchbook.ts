@@ -1,3 +1,4 @@
+import {BookManager} from "./script"
 interface Book {
     title: string;
     author: string;
@@ -85,3 +86,5 @@ document.getElementById('searchButton')?.addEventListener('click', () => apiBook
 
 // Fetch books when the page loads
 window.addEventListener('load', () => apiBookManager.fetchBooks());
+
+

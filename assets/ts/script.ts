@@ -1,3 +1,5 @@
+import { BookValidator } from "./validation";
+
 interface Book {
     title: string;
     author: string;
@@ -8,10 +10,10 @@ interface Book {
     discountPrice?: number;
 }
 
-class BookManager<T extends Book> {
+export class BookManager<T extends Book> {
     books: T[] = [];  // Initialize book array
-    standardGenre: string[] = ["fiction", "non-fiction", "biography", "autobiography", "history",
-        "politics", "science", "narrative", "novel"];
+    standardGenre: string[] = ["fiction", "non-fiction", "biography", "history",
+        "politics", "science", "novel"];
 
     constructor() {}
 
@@ -56,58 +58,21 @@ class BookManager<T extends Book> {
         let isbn = (document.getElementById('isbn') as HTMLInputElement).value;
         let date = (document.getElementById('date') as HTMLInputElement).value;
         let form = document.getElementById('form') as HTMLFormElement;
+        let customGenreInput = document.getElementById('custom-genre') as HTMLInputElement;
 
-        let today = new Date();
-        let currentDate = today.getDate();
-        let currentMonth = today.getMonth() + 1;
-        let currentYear = today.getFullYear();
+        if (!BookValidator.validateTitle(title)) 
+            return false;
+        if (!BookValidator.validateAuthor(author)) 
+            return false;
+        if (!BookValidator.validateGenre(genre, customGenreInput?.value)) 
+            return false;
+        if (!BookValidator.validateDate(date)) 
+            return false;
+        if (!BookValidator.validateISBN(isbn)) 
+            return false;
 
-        let pubYear = date.substring(0, 4);
-        let pubMonth = date.substring(5, 7);
-        let pubDay = date.substring(8, 10);
-
-        if (!title) {
-            alert('Please fill the title of the book');
-            return false;
-        }
-        if (!author) {
-            alert('Please enter the author name');
-            return false;
-        }
-        if (!genre) {
-            alert('Please select a genre');
-            return false;
-        }
-        if (!date) {
-            alert('Please fill the publication date');
-            return false;
-        }
-
-        // Check if the entered date is valid
-        if (currentYear < parseInt(pubYear)) {
-            alert('Please enter the correct date');
-            return false;
-        }
-        if (currentYear === parseInt(pubYear) && currentMonth < parseInt(pubMonth)) {
-            alert('Please enter the correct date');
-            return false;
-        }
-        if (currentYear === parseInt(pubYear) && currentMonth === parseInt(pubMonth) && currentDate < parseInt(pubDay)) {
-            alert('Please enter the correct date');
-            return false;
-        }
-
-        if (isNaN(Number(isbn)) || isbn.length !== 13) {
-            alert('Please enter a valid ISBN-13 number');
-            return false;
-        }
-
-        if (genre === "other" && (document.getElementById('custom-genre') as HTMLInputElement).value === "") {
-            alert('Please enter a custom genre');
-            return false;
-        }
         if (genre === "other") {
-            genre = (document.getElementById('custom-genre') as HTMLInputElement).value;
+            genre = customGenreInput?.value;
         }
 
         this.books.push({ title, author, isbn, genre, date } as T);
@@ -116,7 +81,6 @@ class BookManager<T extends Book> {
         form.reset();
 
         // Custom genre input is hidden when the user clicks on the add button because the user enters the details again
-        var customGenreInput = document.getElementById('custom-genre');
         if (customGenreInput) {
             customGenreInput.remove();
         }
